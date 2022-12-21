@@ -3,11 +3,26 @@ import java.util.Scanner;
 
 public class JogodaVelha {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         char[][] tabuleiro =
                 {{' ', ' ', ' '},
                         {' ', ' ', ' '},
                         {' ', ' ', ' '}};
         imprimirTabuleiro(tabuleiro);
+        while (true) {
+            vezdoJogador(tabuleiro, scanner);
+            imprimirTabuleiro(tabuleiro);
+            vezdoComputador(tabuleiro);
+            imprimirTabuleiro(tabuleiro);
+        }
+
+    }
+
+
+
+    private static void vezdoComputador(char[][] tabuleiro) {
+        System.out.println("_________________________________");
         Random computador = new Random();
         int jogadaComputador;
         while (true) {
@@ -19,13 +34,19 @@ public class JogodaVelha {
 
         }
         posicionarJogadas(tabuleiro, Integer.toString(jogadaComputador),'O');
-        vezdoJogador(tabuleiro);
-        imprimirTabuleiro(tabuleiro);
     }
-        private static void vezdoJogador (char[][] tabuleiro){
-            Scanner scanner = new Scanner(System.in);
+
+    private static void vezdoJogador (char[][] tabuleiro, Scanner scanner) {
+        String entradaUsuario;
+        while (true) {
             System.out.println("Onde você quer jogar - 1 - 9: ");
-            String entradaUsuario = scanner.nextLine();
+            entradaUsuario = scanner.nextLine();
+            if (isValida(tabuleiro, Integer.parseInt(entradaUsuario))) {
+                break;
+            }else{
+                System.out.println("Sua jogada não é valida, jogue novamente: ");
+            }
+        }
             posicionarJogadas(tabuleiro, entradaUsuario, 'X');
         }
 
